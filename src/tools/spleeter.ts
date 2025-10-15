@@ -132,7 +132,7 @@ export class Spleeter {
                 source_track: id,
                 separator: "htdemucs_ft",
                 separator_args: {
-                    random_shifts:4,
+                    random_shifts: 6,
                     iterations: 1,
                     softmask: false,
                     alpha: 1

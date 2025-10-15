@@ -57,7 +57,7 @@ export function apply(ctx: Context, config: Config, bot: Bot) {
 
       if (status.status === 'Done') {
         logger.info(`用户${session.userId}的分离任务${uploadRes.id}已完成`)
-        await session.send(`<file title="${session.username}.mp3" src="${config.api + status.url}"/>`)
+        await session.send(`<file title="${file.file}-伴奏.mp3" src="${config.api + status.url}"/>`)
       } else {
         logger.error(`用户${session.userId}的分离任务${uploadRes.id}失败，状态为${status.status}`)
         await session.send(`分离任务${uploadRes.id}失败，状态为${status.status}`)

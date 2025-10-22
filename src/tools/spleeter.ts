@@ -68,6 +68,23 @@ interface UploadResponse {
     fetch_task_date_finished: string | null;
 }
 
+export interface requestBody {
+    source_track: string,
+    separator: "htdemucs_ft" | "htdemucs",
+    separator_args: {
+        random_shifts: number,
+        iterations: 1,
+        softmask: boolean,
+        alpha: number
+    },
+    bitrate: 1|192|256|320,
+    vocals: boolean,
+    drums: boolean,
+    bass: boolean,
+    other: boolean,
+    piano: boolean
+}
+
 export class Spleeter {
 
     ctx: Context
@@ -126,24 +143,8 @@ export class Spleeter {
 
     }
 
-    async staticMix(id: string) {
+    async staticMix(requestBody: requestBody) {
         try {
-            const requestBody = {
-                source_track: id,
-                separator: "htdemucs_ft",
-                separator_args: {
-                    random_shifts: 6,
-                    iterations: 1,
-                    softmask: false,
-                    alpha: 1
-                },
-                bitrate: 320,
-                vocals: false,
-                drums: true,
-                bass: true,
-                other: true,
-                piano: false
-            };
             const res = await this.ctx.http.post(this.cfg.api + '/api/mix/static/', JSON.stringify(requestBody), {
                 method: 'POST',
                 headers: {
@@ -152,7 +153,7 @@ export class Spleeter {
             })
             return res
         } catch (error) {
-            this.logger.error(`创建${id}静态混合任务失败，错误信息：${error}`)
+            this.logger.error(`创建${requestBody.source_track}静态混合任务失败，错误信息：${error}`)
             return '静态混合创建失败'
         }
     }
